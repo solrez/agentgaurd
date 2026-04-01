@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AgentGuard runtime
+agentguard_audit.jsonl
+escalation_status.json
+*.jsonl
+
+# Frontend
+dashboard/frontend/node_modules/
+dashboard/frontend/dist/
+
+# Environment
+.env
+.env.*
+
+# Claude / AI tools
+.claude/
+
+# Pytest
+.pytest_cache/
+
+# Internal docs (not for repo)
+PRODUCT_VISION.md
+COMPETITIVE_ANALYSIS.md
+TECHNICAL_ARCHITECTURE.md

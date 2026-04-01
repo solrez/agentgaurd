@@ -1,0 +1,48 @@
+# AgentGuard configuration example
+
+guard:
+  sequential: false
+  fail_fast: true
+  block_confidence_threshold: 0.7
+  default_on_escalation: block
+  raise_on_block: true
+
+validators:
+  - type: schema
+    allowed_targets:
+      - "/api/users"
+      - "/api/orders"
+      - "/api/products"
+    blocked_targets:
+      - "/api/admin/delete-all"
+    required_fields:
+      api_call:
+        - method
+        - url
+
+  - type: safety
+    policy:
+      max_risk_level: high
+      blocked_patterns:
+        - "DROP\\s+TABLE"
+        - "DELETE\\s+FROM\\s+\\w+\\s*$"
+        - "rm\\s+-rf\\s+/"
+      max_payload_size_bytes: 500000
+
+  - type: rate_limit
+    max_per_minute: 30
+    max_per_target: 5
+    window_seconds: 60
+
+  - type: policy
+    rules:
+      - type: block_target
+        value: "production-db"
+        reason: "Direct production database access is not allowed"
+      - type: block_action_type
+        value: "code_execution"
+        reason: "Code execution is disabled in this environment"
+
+audit:
+  type: file
+  path: "./audit_log.jsonl"
